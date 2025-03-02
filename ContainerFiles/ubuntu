@@ -1,0 +1,16 @@
+FROM ubuntu:22.04
+
+LABEL com.github.containers.toolbox="true" \
+      usage="This image is meant to be used with the toolbox or distrobox command" \
+      summary="A cloud-native terminal experience" \
+      maintainer="dingwenxuan4@gmail.com"
+
+# Copy the setup scripts and package list
+COPY ../scripts/ubuntu.sh /
+COPY ../scripts/distrobox-shims.sh /
+COPY ../packages/boxkit.packages /
+COPY ../packages/ubuntu.packages /
+
+# Run the setup scripts
+RUN chmod +x ubuntu.sh distrobox-shims.sh && /ubuntu.sh
+RUN rm /ubuntu.sh /distrobox-shims.sh /boxkit.packages /ubuntu.packages
